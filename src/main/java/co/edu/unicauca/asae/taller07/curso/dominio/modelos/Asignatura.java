@@ -1,5 +1,14 @@
 package co.edu.unicauca.asae.taller07.curso.dominio.modelos;
 
-public class Asignatura {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Asignatura {
+    private int id;
+    private String nombre;
+    private String codigo;
 }

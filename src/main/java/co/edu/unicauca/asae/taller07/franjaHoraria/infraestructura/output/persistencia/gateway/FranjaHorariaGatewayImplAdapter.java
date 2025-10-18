@@ -139,8 +139,13 @@ public class FranjaHorariaGatewayImplAdapter implements FranjaHorariaGatewayIntP
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<FranjaHoraria> listarPorCurso(int cursoId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listarPorCurso'");
+        // Usa query optimizada con EntityGraph
+        List<FranjaHorariaEntity> entities = franjaRepository.findByCurso_Id(cursoId);
+
+        return entities.stream()
+                .map(entity -> mappearEntityCompleta(entity))
+                .collect(Collectors.toList());
     }
 }

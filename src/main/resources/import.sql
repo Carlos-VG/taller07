@@ -64,3 +64,13 @@ INSERT INTO franja_horaria (dia, hora_inicio, hora_fin, curso_id, espacio_fisico
 INSERT INTO franja_horaria (dia, hora_inicio, hora_fin, curso_id, espacio_fisico_id) VALUES ('MIERCOLES', '10:00:00', '12:00:00', 1, 2);
 INSERT INTO franja_horaria (dia, hora_inicio, hora_fin, curso_id, espacio_fisico_id) VALUES ('VIERNES', '14:00:00', '16:00:00', 2, 1);
 INSERT INTO franja_horaria (dia, hora_inicio, hora_fin, curso_id, espacio_fisico_id) VALUES ('MARTES', '08:00:00', '10:00:00', 3, 4);
+
+-- ===========================================
+-- INDICES PARA OPTIMIZACION DE CONSULTAS
+-- ===========================================
+CREATE INDEX idx_franja_curso_id ON franja_horaria(curso_id);
+CREATE INDEX idx_franja_dia_hora ON franja_horaria(dia, hora_inicio, hora_fin);
+CREATE INDEX idx_curso_docente_curso ON curso_docente(curso_id);
+CREATE INDEX idx_curso_docente_docente ON curso_docente(docente_id);
+
+-- ===========================================

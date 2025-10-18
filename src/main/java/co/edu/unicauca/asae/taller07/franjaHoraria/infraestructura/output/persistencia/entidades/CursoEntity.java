@@ -11,6 +11,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.annotations.BatchSize;
+
 @Entity
 @Getter
 @Setter
@@ -32,6 +34,7 @@ public class CursoEntity {
     private AsignaturaEntity asignatura;
 
     @ManyToMany
+    @BatchSize(size = 10)
     @JoinTable(name = "curso_docente", joinColumns = @JoinColumn(name = "curso_id"), inverseJoinColumns = @JoinColumn(name = "docente_id"))
     private Set<DocenteEntity> docentes = new HashSet<>();
 

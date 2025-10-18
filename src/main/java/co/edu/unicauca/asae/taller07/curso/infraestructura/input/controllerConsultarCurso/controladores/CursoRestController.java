@@ -2,6 +2,8 @@ package co.edu.unicauca.asae.taller07.curso.infraestructura.input.controllerCons
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CursoRestController {
 
+    private static final Logger log = LoggerFactory.getLogger(CursoRestController.class);
+
     private final ConsultarCursoCUIntPort consultarCursoCU;
     private final CursoMapperInfraestructuraDominio mapper;
 
@@ -31,10 +35,15 @@ public class CursoRestController {
     public ResponseEntity<List<CursoDTORespuesta>> listarPorAsignatura(
             @RequestParam String asignatura) {
 
+        log.info("GET /api/cursos?asignatura={}", asignatura);
+
         List<Curso> cursos = consultarCursoCU.listarPorNombreAsignatura(asignatura);
 
-        return new ResponseEntity<>(
-                mapper.mappearDeCursosARespuesta(cursos),
-                HttpStatus.OK);
+        List<CursoDTORespuesta> respuesta = mapper.mappearDeCursosARespuesta(cursos);
+
+        log.info("Respuesta HTTP 200 OK con {} curso(s)", respuesta.size());
+        log.debug("DTOs de respuesta: {}", respuesta);
+
+        return new ResponseEntity<>(respuesta, HttpStatus.OK);
     }
 }

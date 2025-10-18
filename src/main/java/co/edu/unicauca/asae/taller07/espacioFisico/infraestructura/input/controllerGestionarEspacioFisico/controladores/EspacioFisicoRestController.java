@@ -2,6 +2,8 @@ package co.edu.unicauca.asae.taller07.espacioFisico.infraestructura.input.contro
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +28,8 @@ import lombok.RequiredArgsConstructor;
 @Validated
 public class EspacioFisicoRestController {
 
+    private static final Logger log = LoggerFactory.getLogger(EspacioFisicoRestController.class);
+
     private final GestionarEspacioFisicoCUIntPort gestionarEspacioFisicoCU;
     private final ConsultarEspacioFisicoCUIntPort consultarEspacioFisicoCU;
     private final EspacioFisicoMapperInfraestructuraDominio mapper;
@@ -39,8 +43,14 @@ public class EspacioFisicoRestController {
             @RequestParam(required = false, defaultValue = "") String patron,
             @RequestParam(required = false, defaultValue = "0") @Min(value = 0, message = "{espacioFisico.capacidad.min}") Integer capacidad) {
 
+        log.info("GET /api/espacios-fisicos - Patrón: '{}', Capacidad >= {}", patron, capacidad);
+
         List<EspacioFisico> espacios = consultarEspacioFisicoCU.listarPorPatronYCapacidad(patron, capacidad);
-        return new ResponseEntity<>(mapper.mappearDeEspaciosFisicosARespuesta(espacios), HttpStatus.OK);
+        List<EspacioFisicoDTORespuesta> respuesta = mapper.mappearDeEspaciosFisicosARespuesta(espacios);
+
+        log.info("Respuesta: {} espacio(s) encontrado(s)", respuesta.size());
+
+        return new ResponseEntity<>(respuesta, HttpStatus.OK);
     }
 
     /**
@@ -52,11 +62,17 @@ public class EspacioFisicoRestController {
             @PathVariable @Min(value = 1, message = "{espacioFisico.id.min}") int id,
             @RequestBody @Valid EspacioFisicoDTOPeticion peticion) {
 
+        log.info("PATCH /api/espacios-fisicos/{}/estado - Nuevo estado: {}", id, peticion.getActivo());
+
         int filasActualizadas = gestionarEspacioFisicoCU.actualizarEstado(id, peticion.getActivo());
 
         if (filasActualizadas > 0) {
-            return new ResponseEntity<>("Estado actualizado correctamente", HttpStatus.OK);
+            String mensaje = String.format("Estado actualizado a '%s'",
+                    peticion.getActivo() ? "ACTIVO" : "INACTIVO");
+            log.info("Éxito: {} fila(s) actualizada(s)", filasActualizadas);
+            return new ResponseEntity<>(mensaje, HttpStatus.OK);
         } else {
+            log.warn("Sin cambios: 0 filas actualizadas");
             return new ResponseEntity<>("No se pudo actualizar el estado", HttpStatus.BAD_REQUEST);
         }
     }

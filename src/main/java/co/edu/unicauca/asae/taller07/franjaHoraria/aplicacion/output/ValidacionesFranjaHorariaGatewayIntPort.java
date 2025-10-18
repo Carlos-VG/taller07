@@ -1,7 +1,10 @@
 package co.edu.unicauca.asae.taller07.franjaHoraria.aplicacion.output;
 
 import java.time.LocalTime;
+import java.util.Set;
+
 import co.edu.unicauca.asae.taller07.franjaHoraria.dominio.modelos.DiaSemana;
+import co.edu.unicauca.asae.taller07.franjaHoraria.dominio.modelos.Docente;
 
 /**
  * Puerto de salida para validaciones de reglas de negocio
@@ -33,4 +36,6 @@ public interface ValidacionesFranjaHorariaGatewayIntPort {
      * Verifica si existe un docente por ID
      */
     boolean docenteExiste(int docenteId);
+
+    Set<Docente> obtenerDocentesDeCurso(int cursoId);
 }

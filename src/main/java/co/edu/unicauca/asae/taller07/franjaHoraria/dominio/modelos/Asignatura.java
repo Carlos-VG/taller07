@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Representación de Asignatura para el dominio FranjaHoraria (POJO puro)
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

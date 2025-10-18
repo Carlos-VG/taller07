@@ -24,7 +24,7 @@ INSERT INTO docente (id, oficina_id) VALUES (3, 3);
 -- ===========================================
 -- ADMINISTRATIVO (hereda de persona)
 -- ===========================================
-INSERT INTO administrativo (id, rol) VALUES (4, 'Secretario Academico');
+-- INSERT INTO administrativo (id, rol) VALUES (4, 'Secretario Academico');
 
 -- ===========================================
 -- ASIGNATURAS

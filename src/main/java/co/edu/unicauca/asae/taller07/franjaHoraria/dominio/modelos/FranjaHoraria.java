@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Modelo de dominio para Franja Horaria (POJO)
+ * Modelo de dominio para Franja Horaria (POJO puro)
  */
 @Data
 @AllArgsConstructor
@@ -16,6 +16,6 @@ public class FranjaHoraria {
     private DiaSemana dia;
     private LocalTime horaInicio;
     private LocalTime horaFin;
-    private Curso curso;
-    private EspacioFisico espacioFisico;
+    private Curso curso; // Representación del dominio FranjaHoraria
+    private EspacioFisico espacioFisico; // Representación del dominio FranjaHoraria
 }

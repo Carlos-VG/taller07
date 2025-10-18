@@ -1,7 +1,5 @@
 package co.edu.unicauca.asae.taller07.espacioFisico.aplicacion.input;
 
-import co.edu.unicauca.asae.taller07.espacioFisico.dominio.modelos.EspacioFisico;
-
 public interface GestionarEspacioFisicoCUIntPort {
     /**
      * Actualiza el estado (activo/inactivo) de un espacio físico

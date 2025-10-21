@@ -3,10 +3,8 @@ package co.edu.unicauca.asae.taller07.franjaHoraria.infraestructura.output.persi
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +12,7 @@ import co.edu.unicauca.asae.taller07.franjaHoraria.aplicacion.output.FranjaHorar
 import co.edu.unicauca.asae.taller07.franjaHoraria.dominio.modelos.*;
 import co.edu.unicauca.asae.taller07.franjaHoraria.infraestructura.output.persistencia.entidades.*;
 import co.edu.unicauca.asae.taller07.franjaHoraria.infraestructura.output.persistencia.repositorios.FranjaHorariaRepository;
-
+import lombok.RequiredArgsConstructor;
 import co.edu.unicauca.asae.taller07.curso.infraestructura.output.persistencia.repositorios.CursoRepository;
 import co.edu.unicauca.asae.taller07.espacioFisico.infraestructura.output.persistencia.repositorios.EspacioFisicoRepository;
 import co.edu.unicauca.asae.taller07.curso.infraestructura.output.persistencia.entidades.CursoEntity;
@@ -26,6 +24,7 @@ import co.edu.unicauca.asae.taller07.docente.infraestructura.output.persistencia
  * Usa repositorios de otros dominios SIN duplicarlos
  */
 @Service
+@RequiredArgsConstructor
 public class FranjaHorariaGatewayImplAdapter implements FranjaHorariaGatewayIntPort {
 
     private static final Logger log = LoggerFactory.getLogger(FranjaHorariaGatewayImplAdapter.class);
@@ -33,18 +32,6 @@ public class FranjaHorariaGatewayImplAdapter implements FranjaHorariaGatewayIntP
     private final FranjaHorariaRepository franjaRepository;
     private final CursoRepository cursoRepository;
     private final EspacioFisicoRepository espacioRepository;
-    private final ModelMapper mapper;
-
-    public FranjaHorariaGatewayImplAdapter(
-            FranjaHorariaRepository franjaRepository,
-            CursoRepository cursoRepository,
-            EspacioFisicoRepository espacioRepository,
-            @Qualifier("franjaHorariaModelMapper") ModelMapper mapper) {
-        this.franjaRepository = franjaRepository;
-        this.cursoRepository = cursoRepository;
-        this.espacioRepository = espacioRepository;
-        this.mapper = mapper;
-    }
 
     @Override
     @Transactional
